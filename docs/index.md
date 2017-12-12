@@ -18,11 +18,11 @@ It supports several backends ([Docker](https://www.docker.com/), [Swarm mode](ht
 Imagine that you have deployed a bunch of microservices on your infrastructure. You probably used a service registry (like etcd or consul) and/or an orchestrator (swarm, Mesos/Marathon) to manage all these services.
 If you want your users to access some of your microservices from the Internet, you will have to use a reverse proxy and configure it using virtual hosts or prefix paths:
 
-- domain `api.domain.com` will point the microservice `api` in your private network
+- domain `api.domain.com` will point the microservice `API` in your private network
 - path `domain.com/web` will point the microservice `web` in your private network
-- domain `backoffice.domain.com` will point the microservices `backoffice` in your private network, load-balancing between your multiple instances
+- domain `backoffice.domain.com` will point the microservices `back office` in your private network, load-balancing between your multiple instances
 
-But a microservices architecture is dynamic... Services are added, removed, killed or upgraded often, eventually several times a day.
+But a microservices architecture is dynamic: Services are often added, removed, killed or upgraded, eventually several times a day.
 
 Traditional reverse-proxies are not natively dynamic. You can't change their configuration and hot-reload easily.
 
@@ -30,9 +30,7 @@ Here enters Træfik.
 
 ![Architecture](img/architecture.png)
 
-Træfik can listen to your service registry/orchestrator API, and knows each time a microservice is added, removed, killed or upgraded, and can generate its configuration automatically.
-Routes to your services will be created instantly.
-
+Træfik listens to your service registry/orchestrator API and detects when a microservice is added, removed, killed or upgraded. Træfik automatically generates its configuration and creates the appropriate routes.
 Run it and forget it!
 
 ## Features
@@ -129,7 +127,7 @@ Start it from within the `traefik` folder:
 docker-compose up -d
 ```
 
-In a browser you may open [http://localhost:8080](http://localhost:8080) to access Træfik's dashboard and observe the following magic.
+In a browser, you may open [http://localhost:8080](http://localhost:8080) to access Træfik's dashboard and observe the following magic.
 
 Now, create a folder named `test` and create a `docker-compose.yml` in it with this content:
 
