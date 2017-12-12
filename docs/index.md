@@ -22,7 +22,7 @@ If you want your users to access some of your microservices from the Internet, y
 - path `domain.com/web` will point the microservice `web` in your private network
 - domain `backoffice.domain.com` will point the microservices `backoffice` in your private network, load-balancing between your multiple instances
 
-But a microservices architecture is dynamic... Services are added, removed, killed or upgraded often, eventually several times a day.
+But a microservices architecture is dynamic... Services are often added, removed, killed, or upgraded, eventually several times a day.
 
 Traditional reverse-proxies are not natively dynamic. You can't change their configuration and hot-reload easily.
 
@@ -30,7 +30,7 @@ Here enters Træfik.
 
 ![Architecture](img/architecture.png)
 
-Træfik can listen to your service registry/orchestrator API, and knows each time a microservice is added, removed, killed or upgraded, and can generate its configuration automatically.
+Træfik can listen to your service registry/orchestrator API, and knows each time a microservice is added, removed, killed or upgraded, and can generate its configuration automatically
 Routes to your services will be created instantly.
 
 Run it and forget it!
@@ -129,7 +129,7 @@ Start it from within the `traefik` folder:
 docker-compose up -d
 ```
 
-In a browser you may open [http://localhost:8080](http://localhost:8080) to access Træfik's dashboard and observe the following magic.
+In a browser, you may open [http://localhost:8080](http://localhost:8080) to access Træfik's dashboard and observe the following magic.
 
 Now, create a folder named `test` and create a `docker-compose.yml` in it with this content:
 
