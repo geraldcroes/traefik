@@ -1,0 +1,1 @@
+- Deleted the build status bar (that stays in the readme)

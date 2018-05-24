@@ -124,3 +124,27 @@
 
   # ...
 ```
+
+## Metrics
+
+You can enable Traefik to export internal metrics to different monitoring systems.
+
+```toml
+[api]
+  # ...
+
+  # Enable more detailed statistics.
+  [api.statistics]
+
+    # Number of recent errors logged.
+    #
+    # Default: 10
+    #
+    recentErrors = 10
+
+  # ...
+```
+
+| Path       | Method        | Description             |
+|------------|---------------|-------------------------|
+| `/metrics` |     `GET`     | Export internal metrics |

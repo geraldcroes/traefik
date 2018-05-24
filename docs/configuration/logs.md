@@ -124,20 +124,6 @@ filePath = "/path/to/access.log"
 format = "json"
 ```
 
-To write the logs in async, specify `bufferingSize` as the format (must be >0):
-```toml
-[accessLog]
-filePath = "/path/to/access.log"
-# Buffering Size
-#
-# Optional
-# Default: 0
-#
-# Number of access log lines to process in a buffered way.
-#
-bufferingSize = 100
-```
-
 To filter logs you can specify a set of filters which are logically "OR-connected". Thus, specifying multiple filters will keep more access logs than specifying only one:
 ```toml
 [accessLog]
@@ -242,19 +228,6 @@ RequestCount
 GzipRatio
 Overhead
 RetryAttempts
-```
-
-Deprecated way (before 1.4):
-
-!!! danger "DEPRECATED"
-    `accessLogsFile` is deprecated, use [accessLog](/configuration/logs/#access-logs) instead.
-
-```toml
-# Access logs file
-#
-# DEPRECATED - see [accessLog]
-#
-accessLogsFile = "log/access.log"
 ```
 
 ## Log Rotation
