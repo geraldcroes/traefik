@@ -70,23 +70,6 @@ To write JSON format logs, specify `json` as the format:
   format   = "json"
 ```
 
-
-Deprecated way (before 1.4):
-
-!!! danger "DEPRECATED"
-    `traefikLogsFile` is deprecated, use [traefikLog](/configuration/logs/#traefik-logs) instead.
-
-```toml
-# Traefik logs file
-# If not defined, logs to stdout
-#
-# DEPRECATED - see [traefikLog] lower down
-# In case both traefikLogsFile and traefikLog.filePath are specified, the latter will take precedence.
-# Optional
-#
-traefikLogsFile = "log/traefik.log"
-```
-
 To customize the log level:
 ```toml
 # Log level
@@ -99,7 +82,6 @@ To customize the log level:
 #
 logLevel = "ERROR"
 ```
-
 
 ## Access Logs
 

@@ -1,6 +1,8 @@
 In this quickstart, we'll use [Docker compose](https://docs.docker.com/compose) to create our demo infrastructure.
 
-To save some time, you can clone [Traefik's repository](https://github.com/containous/traefik) and use the quickstart files located in the [examples/quickstart](https://github.com/containous/traefik/tree/master/examples/quickstart/) directory.
+!!! tip 
+    To save some time, you can clone [Traefik's repository](https://github.com/containous/traefik).
+    The quickstart files are located in the [examples/quickstart](https://github.com/containous/traefik/tree/master/examples/quickstart/) directory.
 
 ## Launch Traefik With the Docker Provider
 
@@ -97,6 +99,5 @@ IP: 172.27.0.4
 # ...
 ```
 
-## Where to Go Next?
-
-Now that you have a basic understanding of how Traefik can automatically create the routes to your services and load balance them, it is time to dive into [the documentation](/) and let Traefik work for you!
+!!! question "Where to Go Next?"
+    Now that you have a basic understanding of how Traefik can automatically create the routes to your services and load balance them, it is time to dive into [the documentation](/) and let Traefik work for you!

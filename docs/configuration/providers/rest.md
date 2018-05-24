@@ -1,32 +1,12 @@
-# Rest Backend
+You can configure frontends and backends in Traefik using its RESTful API.
 
-Traefik can be configured:
+## The REST API Endpoint
 
-- using a RESTful api.
+| Path                         | Method | Description         |
+|------------------------------|--------|---------------------|
+| `/api/providers/rest`        | `PUT`  | update provider [^1]|
 
-## Configuration
-
-```toml
-# Enable rest backend.
-[rest]
-  # Name of the related entry point
-  #
-  # Optional
-  # Default: "traefik"
-  #
-  entryPoint = "traefik"
-```
-
-## API
-
-| Path                         | Method | Description     |
-|------------------------------|--------|-----------------|
-| `/api/providers/web`         | `PUT`  | update provider |
-| `/api/providers/rest`        | `PUT`  | update provider |
-
-!!! warning
-    For compatibility reason, when you activate the rest provider, you can use `web` or `rest` as `provider` value.
-
+## The REST API Json
 
 ```shell
 curl -XPUT @file "http://localhost:8080/api/providers/rest"
@@ -90,3 +70,48 @@ with `@file`:
     }
 }
 ```
+
+## Customizing the REST Provider Entrypoint
+
+By default, Traefik uses an entrypoint named `traefik` to listen for REST API requests.
+You can change this by using the `entryPoint` option (see the details in [Enabling the REST Provider](#enabling-the-rest-provider)) 
+
+## Enabling the REST Provider
+
+To enable the debug mode, you need to enable Traefik's API.
+
+??? configuration "Using the Command Line"
+
+    Option | Default Value 
+    -- | -- :
+    --rest | false
+    --rest.entrypoint | traefik
+    
+    {!more-on-command-line.md!}
+
+??? configuration "Using the Configuration File"
+
+    ```toml
+    # Enable rest backend.
+    [rest]
+        # Name of the related entry point
+        #
+        # Optional
+        # Default: "traefik"
+        #
+        entryPoint = "traefik"
+    ```
+    
+    {!more-on-configuration-file.md!}
+
+??? configuration "Using a Key/Value Store"
+
+    Key | Default Value
+    -- | -- :
+    rest | false
+    rest.entryPoint | traefik  
+    
+    {!more-on-key-value-store.md!}
+
+
+[^1]: For compatibility reasons, when you activate the REST provider, you can also use the deprecated `/api/providers/web` endpoint.
