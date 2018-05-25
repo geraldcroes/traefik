@@ -11,7 +11,7 @@ Additionally, the log level will be set to DEBUG.
 
 To enable the debug mode, you need to enable Traefik's API.
 
-??? configuration "Using the Command Line"
+??? abstract "Using the Command Line"
 
     Option | Values | Default Value 
     -- | -- | --:
@@ -20,7 +20,7 @@ To enable the debug mode, you need to enable Traefik's API.
     
     {!more-on-command-line.md!}
 
-??? configuration "Using the Configuration File"
+??? abstract "Using the Configuration File"
 
     ```toml
     [api] 
@@ -37,7 +37,7 @@ To enable the debug mode, you need to enable Traefik's API.
     
     {!more-on-configuration-file.md!}
 
-??? configuration "Using a Key/Value Store"
+??? abstract "Using a Key/Value Store"
 
     Key | Values | Default Value
     -- | -- | --:

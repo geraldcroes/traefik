@@ -1,18 +1,51 @@
-You can configure frontends and backends in Traefik using its RESTful API.
+With the REST provider enabled, Traefik exposes a REST API that lets you create / update / delete frontends and backends.
 
 ## The REST API Endpoint
 
-| Path                         | Method | Description         |
-|------------------------------|--------|---------------------|
-| `/api/providers/rest`        | `PUT`  | update provider [^1]|
+| Path                         | Method | Description                            |
+|------------------------------|--------|----------------------------------------|
+| `/api/providers/rest`        | `PUT`  | Updates the provider configuration [^1]|
 
-## The REST API Json
+!!! tip "Did You Know?"
+    The Json format is similar to the one used in the [Traefik API](/advanced/api/).    
 
-```shell
-curl -XPUT @file "http://localhost:8080/api/providers/rest"
-```
+??? example
+    The following will result in configuring a frontend `exposed-api.localhost` that routes the requests to a service hosted on `private-service.localhost`.
+   
+     ```shell
+     curl -XPUT @json_configuration_file "http://localhost:8080/api/providers/rest"
+     ```
+    
+     Content of @json_configuration_file
+     ```json
+     {
+         "frontends": {
+           "exposed-api-frontend": {
+             "routes": {
+               "domain-name": {
+                 "rule": "host:exposed-api.localhost"
+               }
+             },
+             "backend": "private-service"
+           },
+         },
+         "backends": {
+           "private-service-backend": {
+             "servers": {
+               "main-server": {
+                "URL": "http://private-service.localhost"
+               }, 
+             }
+           }
+         }
+     }
+     ```
+## The Json File Format
 
-with `@file`:
+Below is an example of a more complex backends and frontends structure.
+
+You'll see backends with multiple servers that are load balanced, and a circuit breaker.
+
 ```json
 {
     "frontends": {
@@ -71,25 +104,23 @@ with `@file`:
 }
 ```
 
-## Customizing the REST Provider Entrypoint
+## Customizing the Entrypoint
 
-By default, Traefik uses an entrypoint named `traefik` to listen for REST API requests.
-You can change this by using the `entryPoint` option (see the details in [Enabling the REST Provider](#enabling-the-rest-provider)) 
+By default, Traefik uses an entrypoint named `traefik` to listen for REST API requests. 
+You can change this by in the `entryPoint` option (see the details in [Enabling the REST Provider](#enabling-the-rest-provider)).
 
 ## Enabling the REST Provider
 
-To enable the debug mode, you need to enable Traefik's API.
+??? abstract "Using the Command Line"
 
-??? configuration "Using the Command Line"
-
-    Option | Default Value 
-    -- | -- :
-    --rest | false
-    --rest.entrypoint | traefik
+    Option | Default Value | Description 
+    -- | -- | --:
+    --rest | | Enables the REST Provider
+    --rest.entrypoint | traefik | The entrypoint the API will be available on
     
     {!more-on-command-line.md!}
 
-??? configuration "Using the Configuration File"
+??? abstract "Using the Configuration File"
 
     ```toml
     # Enable rest backend.
@@ -104,14 +135,13 @@ To enable the debug mode, you need to enable Traefik's API.
     
     {!more-on-configuration-file.md!}
 
-??? configuration "Using a Key/Value Store"
+??? abstract "Using a Key/Value Store"
 
-    Key | Default Value
-    -- | -- :
-    rest | false
-    rest.entryPoint | traefik  
+    Option | Default Value | Description 
+    -- | -- | --:
+    rest | | Enables the REST Provider
+    rest.entrypoint | traefik | The entrypoint the API will be available on
     
     {!more-on-key-value-store.md!}
-
 
 [^1]: For compatibility reasons, when you activate the REST provider, you can also use the deprecated `/api/providers/web` endpoint.

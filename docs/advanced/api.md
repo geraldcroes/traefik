@@ -1,12 +1,14 @@
 If enabled, Traefik can expose information about currently configured providers, backends, frontends, and routes.
 
+The API also exposes the [dashboard](/configuration/dashboard/), [health metrics](/advanced/health/), and cluster leadership information.
+
 ## Available API Endpoints
 
 | Path                                                            | Method           | Description                               |
 |-----------------------------------------------------------------|------------------|-------------------------------------------|
 | `/`                                                             |     `GET`        | [The dashboard](/configuration/dashboard) |
-| `/cluster/leader`                                               |     `GET`        | JSON leader true/false response           |
 | `/health`                                                       |     `GET`        | [Health Metrics](/advanced/health/)       |
+| `/cluster/leader`                                               |     `GET`        | JSON leader true/false response           |
 | `/api`                                                          |     `GET`        | Configuration for all providers           |
 | `/api/providers`                                                |     `GET`        | Providers list [^1]                       |
 | `/api/providers/{provider}`                                     |     `GET`, `PUT` | Get information on the given provider [^2]|
@@ -19,136 +21,107 @@ If enabled, Traefik can expose information about currently configured providers,
 | `/api/providers/{provider}/frontends/{frontend}/routes`         |     `GET`        | List routes in a frontend                 |
 | `/api/providers/{provider}/frontends/{frontend}/routes/{route}` |     `GET`        | Get a route in a frontend                 |
 
+## Customizing the Entrypoint
 
-```toml
-[api]
-  # Name of the related entry point
-  #
-  # Optional
-  # Default: "traefik"
-  #
-  entryPoint = "traefik"
+By default, Traefik uses an entrypoint named `traefik` to listen for API requests. 
+You can change this by setting the `entryPoint` option (see the details in [Enabling the API](#enabling-the-api)).
 
-  # Enabled Dashboard
-  #
-  # Optional
-  # Default: true
-  #
-  dashboard = true
+??? example "Example - Defining the Port for the `traefik` Endpoint"
 
-  # Enable debug mode.
-  # This will install HTTP handlers to expose Go expvars under /debug/vars and
-  # pprof profiling data under /debug/pprof.
-  # Additionally, the log level will be set to DEBUG.
-  #
-  # Optional
-  # Default: false
-  #
-  debug = true
-```
+    The following configures the entrypoint `traefik` so it listens on port `8083`.
+    
+    ```toml
+    [entryPoints]
+     [entryPoints.traefik]
+     address = ":8083"
+    ```
+    
+    
 
-For more customization, see [entry points](/configuration/entrypoints/) documentation and [examples](/user-guide/examples/#ping-health-check).
+??? example "Example - Setting the API Onto a Different Entrypoint"
 
-### Address / Port
+    The following will configure an entrypoint named `api-entrypoint` that will listen for traffic on port `8082`.
+    Then, it configures the API to be available on the newly created entrypoint.
+    
+    
+    ```toml
+    [entryPoints]
+     [entryPoints.http]
+     address = ":80"
+    
+     [entryPoints.api-entrypoint]
+     address = ":8082"
+    
+     [entryPoints.another-entrypoint]
+     address = ":8083"
+        
+    [api]
+    #configures the API entrypoint to api-entrypoint
+    entryPoint = "api-entrypoint"
+    ```
+    
+??? example "Example - Adding Basic Auth to the Entrypoint"
+    
+    You can apply every configuration option to the API entrypoint, including basic auth.
+    
+    ```toml    
+    [entryPoints]
+     [entryPoints.api-entrypoint]
+       address=":8080"
+       [entryPoints.api-entrypoint.auth]
+         [entryPoints.api-entrypoint.auth.basic]
+           users = [
+             "test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/",
+             "test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0",
+           ]
+    
+    [api]
+    entrypoint="api-entrypoint"
+    ```
 
-You can define a custom address/port like this:
+{!more-on-entrypoints.md!}
 
-```toml
-defaultEntryPoints = ["http"]
+## Customizing the Path
 
-[entryPoints]
-  [entryPoints.http]
-  address = ":80"
+Since the API is a backend, you can define a frontend to configure the routes to it.  
 
-  [entryPoints.foo]
-  address = ":8082"
+??? example "Configuring the API to be Available on `:8080/traefik/`"
 
-  [entryPoints.bar]
-  address = ":8083"
+    ```toml
+    [entryPoints]
+      [entryPoints.api-entrypoint]
+      address = ":8080"
+    
+    [api]
+    entryPoint="api-entrypoint"
+    
+    [file]
+      [frontends]
+        [frontends.api-frontend]
+        entryPoints = ["api-entrypoint"]
+        backend = "api-backend"
+        [frontends.api-frontend.routes.traefik-path]
+          rule = "PathPrefix:/traefik/"
+      [backends]
+        [backends.api-backend]
+          [backends.api-backend.servers.traefik-instance]
+          url = "http://127.0.0.1:8081"
+    
+    ```
+    
+    !!! info "The File Provier"
+        In the above example, we've used a file provider to define specific frontends and backends for the API.
+        Your can learn about this provider in the [File Provider](/configuration/providers/file/) documentation.
 
-[ping]
-entryPoint = "foo"
 
-[api]
-entryPoint = "bar"
-```
+{!more-on-frontends.md!}
 
-In the above example, you would access a regular path, administration panel, and health-check as follows:
-
-* Regular path: `http://hostname:80/path`
-* Admin Panel: `http://hostname:8083/`
-* Ping URL: `http://hostname:8082/ping`
-
-In the above example, it is _very_ important to create a named dedicated entry point, and do **not** include it in `defaultEntryPoints`.
-Otherwise, you are likely to expose _all_ services via that entry point.
-
-### Custom Path
-
-You can define a custom path like this:
-
-```toml
-defaultEntryPoints = ["http"]
-
-[entryPoints]
-  [entryPoints.http]
-  address = ":80"
-
-  [entryPoints.foo]
-  address = ":8080"
-
-  [entryPoints.bar]
-  address = ":8081"
-
-# Activate API and Dashboard
-[api]
-entryPoint = "bar"
-dashboard = true
-
-[file]
-  [backends]
-    [backends.backend1]
-      [backends.backend1.servers.server1]
-      url = "http://127.0.0.1:8081"
-
-  [frontends]
-    [frontends.frontend1]
-    entryPoints = ["foo"]
-    backend = "backend1"
-      [frontends.frontend1.routes.test_1]
-      rule = "PathPrefixStrip:/yourprefix;PathPrefix:/yourprefix"
-```
-
-### Authentication
-
-You can define the authentication like this:
-
-```toml
-defaultEntryPoints = ["http"]
-
-[entryPoints]
-  [entryPoints.http]
-  address = ":80"
-
- [entryPoints.foo]
-   address=":8080"
-   [entryPoints.foo.auth]
-     [entryPoints.foo.auth.basic]
-       users = [
-         "test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/",
-         "test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0",
-       ]
-
-[api]
-entrypoint="foo"
-```
-
-For more information, see [entry points](/configuration/entrypoints/) .
-
-### Provider call example
+### The JSon Response Format
 
 ```shell
 curl -s "http://localhost:8080/api" | jq .
 ```
+
 ```json
 {
   "file": {

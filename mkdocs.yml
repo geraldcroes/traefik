@@ -61,6 +61,7 @@ markdown_extensions:
   - footnotes
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.smartsymbols
   - markdown_include.include:
       base_path: /mkdocs/docs/includes/
       encoding: utf-8

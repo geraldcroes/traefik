@@ -21,7 +21,7 @@ By default, the dashboard is available on `/` on port `:8080`.
 
 To enable the dashboard, you need to enable Traefik's API.
 
-??? configuration "Using the Command Line"
+??? abstract "Using the Command Line"
 
     Option | Values | Default Value 
     -- | -- | --:
@@ -30,7 +30,7 @@ To enable the dashboard, you need to enable Traefik's API.
     
     {!more-on-command-line.md!}
 
-??? configuration "Using the Configuration File"
+??? abstract "Using the Configuration File"
 
     ```toml
     [api] 
@@ -44,7 +44,7 @@ To enable the dashboard, you need to enable Traefik's API.
     
     {!more-on-configuration-file.md!}
 
-??? configuration "Using a Key/Value Store"
+??? abstract "Using a Key/Value Store"
 
     Key | Values | Default Value
     -- | -- | --:
