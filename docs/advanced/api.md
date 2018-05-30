@@ -21,6 +21,73 @@ The API also exposes the [dashboard](/configuration/dashboard/), [health metrics
 | `/api/providers/{provider}/frontends/{frontend}/routes`         |     `GET`        | List routes in a frontend                 |
 | `/api/providers/{provider}/frontends/{frontend}/routes/{route}` |     `GET`        | Get a route in a frontend                 |
 
+
+??? example "Example of a Call on /api"
+
+    ```shell
+    curl -s "http://localhost:8080/api" | jq .
+    ```
+    
+    ```json
+    {
+      "file": {
+        "frontends": {
+          "frontend2": {
+            "routes": {
+              "test_2": {
+                "rule": "Path:/test"
+              }
+            },
+            "backend": "backend1"
+          },
+          "frontend1": {
+            "routes": {
+              "test_1": {
+                "rule": "Host:test.localhost"
+              }
+            },
+            "backend": "backend2"
+          }
+        },
+        "backends": {
+          "backend2": {
+            "loadBalancer": {
+              "method": "drr"
+            },
+            "servers": {
+              "server2": {
+                "weight": 2,
+                "URL": "http://172.17.0.5:80"
+              },
+              "server1": {
+                "weight": 1,
+                "url": "http://172.17.0.4:80"
+              }
+            }
+          },
+          "backend1": {
+            "loadBalancer": {
+              "method": "wrr"
+            },
+            "circuitBreaker": {
+              "expression": "NetworkErrorRatio() > 0.5"
+            },
+            "servers": {
+              "server2": {
+                "weight": 1,
+                "url": "http://172.17.0.3:80"
+              },
+              "server1": {
+                "weight": 10,
+                "url": "http://172.17.0.2:80"
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
+
 ## Customizing the Entrypoint
 
 By default, Traefik uses an entrypoint named `traefik` to listen for API requests. 
@@ -35,8 +102,6 @@ You can change this by setting the `entryPoint` option (see the details in [Enab
      [entryPoints.traefik]
      address = ":8083"
     ```
-    
-    
 
 ??? example "Example - Setting the API Onto a Different Entrypoint"
 
@@ -98,7 +163,7 @@ Since the API is a backend, you can define a frontend to configure the routes to
     [file]
       [frontends]
         [frontends.api-frontend]
-        entryPoints = ["api-entrypoint"]
+        entryPoints = [ "api-entrypoint" ] 
         backend = "api-backend"
         [frontends.api-frontend.routes.traefik-path]
           rule = "PathPrefix:/traefik/"
@@ -115,72 +180,6 @@ Since the API is a backend, you can define a frontend to configure the routes to
 
 
 {!more-on-frontends.md!}
-
-### The JSon Response Format
-
-```shell
-curl -s "http://localhost:8080/api" | jq .
-```
-
-```json
-{
-  "file": {
-    "frontends": {
-      "frontend2": {
-        "routes": {
-          "test_2": {
-            "rule": "Path:/test"
-          }
-        },
-        "backend": "backend1"
-      },
-      "frontend1": {
-        "routes": {
-          "test_1": {
-            "rule": "Host:test.localhost"
-          }
-        },
-        "backend": "backend2"
-      }
-    },
-    "backends": {
-      "backend2": {
-        "loadBalancer": {
-          "method": "drr"
-        },
-        "servers": {
-          "server2": {
-            "weight": 2,
-            "URL": "http://172.17.0.5:80"
-          },
-          "server1": {
-            "weight": 1,
-            "url": "http://172.17.0.4:80"
-          }
-        }
-      },
-      "backend1": {
-        "loadBalancer": {
-          "method": "wrr"
-        },
-        "circuitBreaker": {
-          "expression": "NetworkErrorRatio() > 0.5"
-        },
-        "servers": {
-          "server2": {
-            "weight": 1,
-            "url": "http://172.17.0.3:80"
-          },
-          "server1": {
-            "weight": 10,
-            "url": "http://172.17.0.2:80"
-          }
-        }
-      }
-    }
-  }
-}
-```
 
 [^1]: For compatibility reasons, the [REST provider](/configuration/providers/rest/) endpoints will be available both on `/api/providers/web/*` and `/api/providers/rest/*` 
 

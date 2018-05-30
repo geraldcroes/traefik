@@ -1,5 +1,3 @@
-# Ping Definition
-
 ## Configuration
 
 ```toml

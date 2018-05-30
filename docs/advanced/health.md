@@ -65,6 +65,23 @@ curl -s "http://localhost:8080/health" | jq .
 }
 ```
 
+### Command: healthcheck
+
+This command allows to check the health of Traefik. Its exit status is `0` if Traefik is healthy and `1` if it is unhealthy.
+
+This can be used with Docker [HEALTHCHECK](https://docs.docker.com/engine/reference/builder/#healthcheck) instruction or any other health check orchestration mechanism.
+
+!!! note
+    The [`ping`](/configuration/ping) must be enabled to allow the `healthcheck` command to call `/ping`.
+
+```bash
+traefik healthcheck
+```
+```bash
+OK: http://:8082/ping
+```
+
+
 ## Enabling the Health Check Endpoint
 
 To enable the health check endpoint, you need to enable Traefik's API.

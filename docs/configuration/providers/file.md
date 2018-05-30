@@ -1,6 +1,6 @@
-# File Backends
+Even if the most convenient way to configure Traefik is to point to your orchestrator, Traefik supports the use of configuration files.
 
-Traefik can be configured with a file.
+ 
 
 ## Reference
 
