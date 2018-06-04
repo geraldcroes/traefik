@@ -1,6 +1,4 @@
-Even if the most convenient way to configure Traefik is to point to your orchestrator, Traefik supports the use of configuration files.
-
- 
+Even if the most convenient way to configure Traefik is to point to your orchestrator, Traefik supports the use of configuration files where you can define manually configuration 
 
 ## Reference
 

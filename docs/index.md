@@ -1,4 +1,4 @@
-![Architecture](img/architecture.png)
+![Architecture](img/traefik-architecture.svg)
 
 Traefik is a modern HTTP reverse proxy / load balancer that automatically creates the routes to your services.
 Traefik discovers your services with the help of your existing infrastructure components and use their characteristics to configure the matching routes. 

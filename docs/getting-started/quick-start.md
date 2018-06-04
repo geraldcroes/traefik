@@ -1,5 +1,7 @@
 In this quickstart, we'll use [Docker compose](https://docs.docker.com/compose) to create our demo infrastructure.
 
+![quickstart-diagram](../img/quickstart-diagram.svg)
+
 !!! tip 
     To save some time, you can clone [Traefik's repository](https://github.com/containous/traefik).
     The quickstart files are located in the [examples/quickstart](https://github.com/containous/traefik/tree/master/examples/quickstart/) directory.

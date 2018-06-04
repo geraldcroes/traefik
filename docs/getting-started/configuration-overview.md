@@ -1,8 +1,7 @@
-Draw a diagram with "static configuration" configures dynamic configuration "providers" configures "routes and stuff"
+Configuring Traefik means setting up the dialogue with providers and other critical components you have chosen in your infrastructure.
 
-Configuring Traefik  means setting up the dialogue with providers, and defining the entrypoints. 
+Once configured, these elements will allow Traefik to automatically detect the deployed services and help it create the routes automatically.
 
-Every other elements, such as routes, frontends, backends, SSL certificates, ... will be defined dynamically.
 
 You can combine combine multiple sources of configuration, with the following order of precedence:
 
