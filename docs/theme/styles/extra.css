@@ -46,3 +46,12 @@ figcaption {
     font-style: italic;
     color: #8D909F;
 }
+
+.md-nav--secondary {
+    margin: 2em;
+    border: 2px solid #e39641;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: rgba(244,243,243,0.3);
+    box-shadow: 0 5px 12px 0 rgba(34,72,98,0.2);
+}
