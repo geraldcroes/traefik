@@ -1,4 +1,3 @@
-# An Edge Router
 Traefik is an edge router: 
 it receives requests on behalf of your system and finds out which component should handle it. 
 
