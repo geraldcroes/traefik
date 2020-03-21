@@ -491,7 +491,7 @@ func (c *ClientTLS) CreateTLSConfig() (*tls.Config, error) {
 				return nil, fmt.Errorf("tls cert is a file, but tls key is not")
 			}
 		} else {
-			if errKeyIsFile != nil {
+			if errKeyIsFile == nil {
 				cert, err = tls.X509KeyPair([]byte(c.Cert), []byte(c.Key))
 				if err != nil {
 					return nil, fmt.Errorf("failed to load TLS keypair: %v", err)
