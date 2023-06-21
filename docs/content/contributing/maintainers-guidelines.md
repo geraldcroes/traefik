@@ -88,8 +88,7 @@ but we can suggest you start with activities such as:
   and prioritize them based on the severity of the problem.
   The process is called *[issue triaging](https://github.com/traefik/contributors-guide/blob/master/issue_triage.md)*.
   Each of the maintainers is welcome to join the meeting.
-  For that purpose, we use the Traefik Maintainers Discord server
-  where you are invited once you have become an official maintainer.
+  For that purpose, we use the Traefik Maintainers Discord server.
 
 ## Maintainers Activity
 
