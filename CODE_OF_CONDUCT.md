@@ -47,6 +47,13 @@ Further details of specific enforcement policies may be posted separately.
 
 Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
 
+When an inapropriate behavior is detected, maintainers will discuss on the Maintainer's Discord before marking the message as "abuse". 
+This conversation beforehand avoids one-sided decisions.
+
+The first message will be marked as abuse.
+The second message marked as abuse results in a 7-day ban.
+The third message marked as abuse results in a permanent ban.
+
 ## Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
