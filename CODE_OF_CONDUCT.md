@@ -57,6 +57,8 @@ The third edited message and marked as abuse results in a permanent ban.
 The content of edited messages is:
 `Dear user, we want traefik to provide a welcoming and respectful environment. Your [comment/issue/PR] has been reported and marked as abuse according to our [Code of Conduct](./CODE_OF_CONDUCT.md). Thank you.`
 
+The [report must be resolved](https://docs.github.com/en/communities/moderating-comments-and-conversations/managing-reported-content-in-your-organizations-repository#resolving-a-report) accordingly.
+
 ## Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
